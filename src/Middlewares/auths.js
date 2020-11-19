@@ -6,5 +6,5 @@ module.exports.authenticated = function(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
 	}
-	res.send(error("You must log in first"));
+	else res.send(error("You must log in first"));
 }

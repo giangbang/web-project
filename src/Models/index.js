@@ -11,14 +11,14 @@ const pointModel 		= require('./points');
 const courseModel 		= require('./courses');
 const quizModel 		= require('./quizzes');
 
-class users 		extends Model {}
-class comments 		extends Model {}
-class roles 		extends Model {}
-class submissions 	extends Model {}
-class points 		extends Model {}
-class courses 		extends Model {}
-class tags 			extends Model {}
-class quizzes 		extends Model {}
+class users 		extends Model {};
+class comments 		extends Model {};
+class roles 		extends Model {};
+class submissions 	extends Model {};
+class points 		extends Model {};
+class courses 		extends Model {};
+class tags 			extends Model {};
+class quizzes 		extends Model {};
 
 
 let database = new Sequelize(
@@ -39,8 +39,7 @@ users.init(userModel.schema, {
 
 roles.init(roleModel.schema, {
 	sequelize : database,
-	modelName: studentModel.name
-}, {
+	modelName: roleModel.name,
 	timestamps: false
 });
 
@@ -133,6 +132,14 @@ quizzes.hasMany(points);
 async function init(force =  false) {
 	await database.authenticate();
 	await database.sync({force: force});
+	
+	let roleList = await roles.findAll();
+	if (roleList.length === 0) {
+		for (const [name, role] of Object.entries(roleModel.defaults)) {
+			let newRole = roles.build(role);
+			await newRole.save();
+		}
+	}
 }
 
 module.exports = {

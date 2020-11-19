@@ -1,45 +1,22 @@
 'use strict'
 
-const express = require('express');
-const router = express.Router();
-const { success, error } = require('../Views/message');
+const {success, error} 	= require('../Views/message');
+const handler 			= require('../Middlewares');
+const express			= require('express');
+const router 			= express.Router();
 
-const { models } = require('../Models');
 
-const comments = models.comments;
+router.post('/edit', 
+		handler.auths.authenticated, 
+		handler.comments.edit);
+	
+router.get('/del/:id', 
+		handler.auths.authenticated, 
+		handler.comments.del);
+			
 
-router.post('/new', (req, res) => {
-	let content = req.body;
-	let row = comments.build(content);
-	row.save().then(d => {
-		res.send(success(d));
-	}).catch(e => {
-		res.send(error(e));
-	});
-})
-
-router.get('/delete/:id', (req, res) => {
-	comments.findByPk(req.params.id)
-	.then(d => {
-		return d.destroy();
-	})
-	.then(d => {
-		res.send(success(d))
-	}).catch(e => {
-		res.send(error(e));
-	});
-});
-
-router.post('/edit/:id', (req, res) => {
-	let id = req.params.id;
-	comments.findByPk(id).then(b => {
-		b.content = req.body.content;
-		return b.save();
-	}).then(b => {
-		res.send(success(b));
-	}).catch(e => {
-		res.error(e);
-	});
-});
+router.post('/create', 
+		handler.auths.authenticated, 
+		handler.comments.create);
 
 module.exports = router;

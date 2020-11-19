@@ -8,11 +8,15 @@ module.exports = {
 			autoIncrement: true
 		},
 		role: {
-			type: DataTypes.STRING
+			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
 		}
 	},
-	name: 'roles'
+	name: 'roles',
+	defaults: {
+		student: { role: 'Student' },
+		admin  : { role: 'Admin' }
+	}
 }
 

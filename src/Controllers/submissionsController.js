@@ -5,25 +5,30 @@ const { models }		 = require('../Models');
 
 const submissions 	= models.submissions;
 
-function create(submission) {
+async function create(submission) {
 	let row = submissions.build(submission);
-	
-	row.save().then(d => {
-		return success(d);
-	}).catch(e => {
+	try {
+		let row = await row.save();
+		if (row == null) 
+			return error("Cannot create submission");
+		return success(row);
+	} catch (e) {
 		return error(e);
-	})
+	}
 }
 
-function del(id)  {
-	submissions.findByPk(id)
-	.then(d => {
-		return d.destroy();
-	}).then(d => {
-		return success(d);
-	}).catch(e => {
+async function del(id)  {
+	try {
+		let submission = await submissions.findByPk(id);
+		if (submission == null) 
+			return error("Submission not found");
+		submission = submission.destroy();
+		if (submission != null) 
+			return success(submission);
+		return error("Cannot delete submission");
+	} catch (e) {
 		return error(e);
-	})
+	}
 }
 
 module.exports = {

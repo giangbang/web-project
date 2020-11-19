@@ -2,39 +2,39 @@
 
 const { success, error } = require('../Views/message');
 const { models }		 = require('../Models');
+const controller		 = require('../Controllers');
 
-const courses = models.courses;
-const quizzes = models.quizzes;
-
-module.exports.getByID = (req, res) => {
-	courses.findOne({
-		where: {
-			id: req.params.id
-		},
-		include: [quizzes],
-		attributes: []
-	}).then(d => {
-		res.send(success(d));
-	}).catch(e => {
-		res.send(error(e));
-	})
+module.exports.getByCode = async function(req, res, next) {
+	try {
+		let code = req.params.code;
+		let q = await controller.courses.getByCode(code);
+		res.send(q);
+		next();
+	} catch (e) {
+		res.send(error(""+e));
+	}
 };
 
-module.exports.create = (req, res) => {
-	let content = req.body;
-	let row = courses.build(content);
-	row.save().then(d => {
-		res.send(success(d));
-	}).catch(e => {
-		res.send(error(e));
-	});
+module.exports.create = async function(req, res, next) {
+	try {
+		let content = req.body.content;
+		let q = await controller.courses.create(content);
+		res.send(q);
+		next();
+	} catch (e) {
+		res.send(error(""+e));
+	}
 };
 
-module.exports.get = (req, res) => {
-	courses.findAll()
-	.then(d => {
-		res.send(success(d));
-	}).catch(e => {
-		res.send(error(e));
-	})
+module.exports.del = async function(req, res, next) {
+	try {
+		let id = req.params.id;
+		let q = await controller.courses.del(id);
+		res.send(q);
+		next();
+	} catch(e) {
+		res.send(error(e+''));
+	};
 };
+
+

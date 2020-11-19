@@ -19,9 +19,11 @@ async function create(comment) {
 async function del(id) {
 	try {
 		let comment = await comments.findByPk(id);
-		comment = await comment.destroy();
-		if (comment != null) return success(comment);
-		return error("Cannot delete comment");
+		if (comment != null) {
+			comment = await comment.destroy();
+			return success(comment);
+		}
+		return error("Comment not found");
 	} catch(e) {
 		return error(e);
 	}
@@ -30,6 +32,7 @@ async function del(id) {
 async function edit(id, content) {
 	try {
 		let comment = comments.findByPk(id);
+		if (comment == null) return error("Comment not found");
 		comment.content = content;
 		comment = await comment.save();
 		if (comment == null) return error("Cannot edit comment");
