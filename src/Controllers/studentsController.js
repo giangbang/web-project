@@ -7,9 +7,12 @@ const students 	= models.students;
 const users    	= models.users;
 
 async function getByCode(code) {
-	students.findAll({
+	try {
+		let student 
+	}
+	students.findOne({
 		where: {
-			studentCode: req.params.code
+			studentCode: code
 		}
 	}).then(d => {
 		return (success(d));
@@ -18,7 +21,7 @@ async function getByCode(code) {
 	});
 }
 
-async function create(student) {
+function create(student) {
 	let row = students.build(student);
 	
 	row.save().then(d => {
@@ -28,7 +31,19 @@ async function create(student) {
 	});
 }
 
+function del(id) {
+	students.findByPk(id)
+	.then(d => {
+		return d.destroy();
+	}).then(d => {
+		return success(d);
+	}).catch(e => {
+		return error(e);
+	})
+}
+
 module.exports = {
 	getByCode: getByCode,
-	create: create
+	create: create,
+	del: del
 }

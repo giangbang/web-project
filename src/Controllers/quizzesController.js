@@ -7,39 +7,50 @@ const quizzes 	= models.quizzes;
 const comments 	= models.comments;
 const users 	= models.users;
 
-async function getComments(id) {
-	quizzes.findAll({
-		include: {
-			model: comments,
-			attributes: { exclude: ['userId', 'quizId'] },
+async function getById(id) {
+	try {
+		let quiz = await quizzes.findOne({
+			where: { id: id },
 			include: {
-				model: users,
-				attributes: { exclude: ['password', 'id'] }
+				model: comments,
+				attributes: { exclude: ['userId', 'quizId'] },
+				include: {
+					model: users,
+					attributes: { exclude: ['password'] }
+				}
 			}
-		},
-		where: {
-			id: id
-		},
-		attributes: []
-	})
-	.then(d => {
-		return (success(d));
-	})
-	.catch(e => {
-		return (error(e));
-	});
+		});
+		if (quiz != null) return success(quiz);
+		return error("Quiz not found");
+	} catch (e) {
+		return error(e);
+	}
 };
 
+async function del(id) {
+	try {
+		let quiz = await quizzes.findByPk(id);
+		if (quiz == null) return error("Quiz not found");
+		quiz = await quiz.destroy();
+		return success(quiz);
+	} catch (e) {
+		return error(e);
+	}
+}
+
 async function create(content) {
-	let row = quizzes.build(content);
-	row.save().then(d => {
-		return (success(d));
-	}).catch(e => {
-		return (error(e));
-	});
+	try {
+		let row = quizzes.build(content);
+		row = await row.save();
+		if (row == null) return error("Cannot create quiz");
+		return success(row);
+	} catch (e) {
+		return error(e);
+	}
 }
 
 module.exports = {
-	getCommetns: getComments,
-	create: create
+	getById: getById,
+	create: create,
+	del: del
 }

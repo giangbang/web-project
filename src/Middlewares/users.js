@@ -1,14 +1,24 @@
 'use strict'
 
-const controller = require('../Controllers');
+const controller 		 = require('../Controllers');
 const { success, error } = require('../Views/message');
-const bcrypt	 = require('bcrypt');
+const bcrypt	 		 = require('bcrypt');
 
 module.exports.getUserByName = function(req, res) {
 	let name = req.params.name;
 	controller.users.getUserByName(name)
 	.then(ret => {
 		res.send(ret);
+	}).catch(e => {
+		res.send(e);
+	});
+};
+
+module.exports.getById = function(req, res) {
+	let id = req.params.id;
+	controller.users.getById(id)
+	.then(user => {
+		res.send(user);
 	}).catch(e => {
 		res.send(e);
 	});

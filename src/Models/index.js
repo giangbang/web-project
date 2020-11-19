@@ -3,7 +3,7 @@
 const { Sequelize, Model } = require('sequelize');
 
 const userModel 		= require('./users');
-const studentModel 		= require('./students');
+const roleModel 		= require('./roles');
 const tagModel 			= require('./tags');
 const commentModel 		= require('./comments');
 const submissionModel 	= require('./submissions');
@@ -13,7 +13,7 @@ const quizModel 		= require('./quizzes');
 
 class users 		extends Model {}
 class comments 		extends Model {}
-class students 		extends Model {}
+class roles 		extends Model {}
 class submissions 	extends Model {}
 class points 		extends Model {}
 class courses 		extends Model {}
@@ -37,9 +37,11 @@ users.init(userModel.schema, {
 	modelName: userModel.name
 });
 
-students.init(studentModel.schema, {
+roles.init(roleModel.schema, {
 	sequelize : database,
 	modelName: studentModel.name
+}, {
+	timestamps: false
 });
 
 tags.init(tagModel.schema, {
@@ -73,11 +75,12 @@ quizzes.init(quizModel.schema, {
 });
 
 
-students.belongsTo(users, {
+// ==============================================
+
+users.belongsTo(roles, {
 	foreignKey: { allowNull: false },
-	onDelete: 'CASCADE'
+	onDelete: 'NO ACTION'
 });
-users.hasOne(students);
 
 comments.belongsTo(users, {
 	foreignKey: { allowNull: false },

@@ -8,6 +8,7 @@ const handler = require('../Middlewares');
 
 // get user info by username
 router.get('/getbyName/:name', handler.users.getUserByName);
+router.get('/getbyId/:id', handler.users.getById);
 
 // create new user in database
 router.post('/new', handler.users.create);

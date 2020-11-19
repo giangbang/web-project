@@ -5,19 +5,14 @@ module.exports = {
 		id: {
 			type: DataTypes.INTEGER,
 			primaryKey: true,
-			autoIncrement: true,
+			autoIncrement: true
 		},
-		studentCode: {
-			type: DataTypes.STRING,
+		role: {
+			type: DataTypes.STRING
 			allowNull: false,
 			unique: true,
-		},
-		fullName: {
-			type: DataTypes.STRING,
-			allowNull: false
 		}
 	},
-	name: 'students'
+	name: 'roles'
 }
-
 
