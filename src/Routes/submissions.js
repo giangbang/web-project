@@ -7,17 +7,13 @@ const router 			= express.Router();
 
 let path = (process.env.API_PATH || '') + '/comments';
 
-router.get('/getById/:id', 
-		handler.auths.authenticated, 
-		handler.quizzes.getById);
-	
 router.get('/del/:id', 
 		handler.auths.authenticated, 
-		handler.quizzes.del);
+		handler.submissions.del);
 			
 
 router.post('/create', 
 		handler.auths.authenticated, 
-		handler.quizzes.create);
+		handler.submissions.create);
 
 module.exports = router;

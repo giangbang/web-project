@@ -1,32 +1,37 @@
 'use strict'
 
-const controller = require('../Controllers');
+const controller 		 = require('../Controllers');
 const { success, error } = require('../Views/message');
-const bcrypt	 = require('bcrypt');
 
-module.exports.getUserByName = function(req, res) {
-	let name = req.params.name;
-	controller.users.getUserByName(name)
-	.then(ret => {
-		res.send(ret);
-	}).catch(e => {
-		res.send(e);
-	});
+module.exports.getByName = async function(req, res, next) {
+	try {
+		let name = req.params.name;
+		let q = await controller.users.getByName(name);
+		res.send(q);
+		next();
+	} catch (e) {
+		res.send(error(""+e));
+	}
 };
 
-module.exports.create = async function(req, res) {
+module.exports.getById = async function(req, res, next) {
 	try {
-		const salt = await bcrypt.genSalt(1);
+		let id = req.params.id;
+		let q = await controller.users.getById(id);
+		res.send(q);
+		next();
+	} catch (e) {
+		res.send(error(""+e));
+	}
+};
+
+module.exports.create = async function(req, res, next) {
+	try {
 		let content = req.body;
-		let password  = content.password;
-		content.password = await bcrypt.hash(password, salt);
-		controller.users.create(content)
-		.then(b => {
-			console.log(b);
-			res.send(b);
-		}).catch(e => {
-			res.send(e);
-		});
+		content.password = await controller.auth.encrypt(content.password);
+		let q = await controller.users.create(content);
+		res.send(q);
+		next();
 	} catch(e) {
 		res.status(500).send(error(e));
 	};

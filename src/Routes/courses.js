@@ -1,17 +1,22 @@
-'use strict'
+'use strict';
 
-const express = require('express');
-const router = express.Router();
+const {success, error} 	= require('../Views/message');
+const handler 			= require('../Middlewares');
+const express			= require('express');
+const router 			= express.Router();
 
-const handler = require('../Middlewares');
 
-// get quizzes list by courses's id
-router.get('/:id', handler.courses.getByID);
+router.get('/getByCode/:code', 
+		handler.auths.authenticated, 
+		handler.courses.getByCode);
+	
+router.get('/del/:id', 
+		handler.auths.authenticated, 
+		handler.courses.del);
+			
 
-// create new course to database
-router.post('/new', handler.courses.create);
-
-// list all courses
-router.get('/', handler.courses.get);
+router.post('/create', 
+		handler.auths.authenticated, 
+		handler.courses.create);
 
 module.exports = router;
