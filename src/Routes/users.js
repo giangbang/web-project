@@ -1,10 +1,12 @@
-'use strict'
+'use strict';
+
 
 const {success, error} 	= require('../Views/message');
 const express 			= require('express');
 const passport 			= require('passport');
 const handler 			= require('../Middlewares');
 const router 			= express.Router();
+
 
 let path = (process.env.API_PATH || '') + '/users';
 
@@ -30,6 +32,14 @@ router.get("/loginFail", (req,res)=> {
 router.get("/loginSuccess" ,(req,res)=> {
 	res.send(success("Welcome!"));
 });
+
+
+router.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/users/login' }),
+  function(req, res) {
+    res.redirect('/users/loginOK');
+  });
+
 
 
 module.exports = router;
