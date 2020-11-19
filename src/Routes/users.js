@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
-const express 	= require('express');
-const passport 	= require('passport');
-const router 	= express.Router();
+const express = require('express');
+const passport = require('passport');
+const router = express.Router();
 
 const handler = require('../Middlewares');
 
@@ -13,10 +13,15 @@ router.get('/getbyName/:name', handler.users.getUserByName);
 router.post('/new', handler.users.create);
 
 // login
-router.post('/login', passport.authenticate('local', {
-	failureFlash: "Try again",
-	successFlash: "Welcome!",
-	sucessRedirect: "/"
-}))
+router.get("/login", (req,res)=>{res.send({message:"Fail"})})
+router.get("/loginOK" ,(req,res)=>{res.send({message: "Ok"})})
+
+router.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/users/login' }),
+  function(req, res) {
+    res.redirect('/users/loginOK');
+  });
+
+
 
 module.exports = router;
