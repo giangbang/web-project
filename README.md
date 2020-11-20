@@ -1,4 +1,5 @@
 # Codehub backend
+This project is the backend side of the final project in a course at my university. For the frontend side, go to <a href=https://github.com/kien-pt/codehub-frontend>here</a>.
 ### Responses format
   The responses from server side are generally formatted in the same format as follows:
 ```json
