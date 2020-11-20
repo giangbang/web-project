@@ -18,9 +18,9 @@ router.post(path + '/users/new',
 		handler.users.create);
 		
 router.post(path + '/login', passport.authenticate('local', {
-	failureRedirect: path+'/loginFail',
+	failureRedirect: '/loginFail',
 }), function (req, res) {
-    res.redirect(path+'/loginSuccess');
+    res.redirect('/loginSuccess');
 });
 
 router.get("/loginFail", (req,res)=> {
