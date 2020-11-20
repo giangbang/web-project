@@ -35,7 +35,7 @@ Here is the list of server api url that has been finished, they might be changed
 * GET `api/v1/quizzes/id/{id}`
 * GET `api/v1/quizzes/delete/id/{id}`
 * POST `api/v1/quizzes/new`
-### Summissions
+### Submissions
 * GET `api/v1/submissions/delete/id/{id}`
 * POST `api/v1/submissions/new`
 ### Tags
@@ -43,6 +43,23 @@ Here is the list of server api url that has been finished, they might be changed
 * GET `api/v1/tags/delete/id/{id}`
 * POST `api/v1/tags/new/`
 ---
-> Some feature notes
+#### Some feature notes
 * password of users are hashed.
 * cookie and session are used to save the login status of users.
+#### Setup and run
+  Before running, create a `.env` file to store some configuration information. The `.env` file might look like below:
+```
+DB_HOST=localhost
+PORT=
+DIALECT=mysql
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+NODE_ENV=development
+SESSION_SECRET=
+```
+Open the terminal, run
+```
+$ npm install
+$ npm run start
+```
