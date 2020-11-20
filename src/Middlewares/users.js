@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const controller 		 = require('../Controllers');
+const controller         = require('../Controllers');
 const { success, error } = require('../Views/message');
 
 module.exports.getByName = async function(req, res, next) {

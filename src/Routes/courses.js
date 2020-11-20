@@ -1,21 +1,21 @@
 'use strict';
 
 const {success, error} 	= require('../Views/message');
-const handler 			= require('../Middlewares');
-const express			= require('express');
-const router 			= express.Router();
+const handler           = require('../Middlewares');
+const path              = require('../path') + '/courses';
+const express           = require('express');
+const router            = express.Router();
 
-
-router.get('/getByCode/:code', 
+router.get(path + '/code/:code', 
 		handler.auths.authenticated, 
 		handler.courses.getByCode);
 	
-router.get('/del/:id', 
+router.get('/delete/id/:id', 
 		handler.auths.authenticated, 
 		handler.courses.del);
 			
 
-router.post('/create', 
+router.post('/new', 
 		handler.auths.authenticated, 
 		handler.courses.create);
 

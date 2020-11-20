@@ -1,8 +1,8 @@
 'use strict';
 
 const { success, error } = require('../Views/message');
-const { models }		 = require('../Models');
-const controller		 = require('../Controllers');
+const { models }         = require('../Models');
+const   controller       = require('../Controllers');
 
 module.exports.edit = async function(req, res, next) {
 	try {

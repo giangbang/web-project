@@ -1,39 +1,22 @@
-'use strict'
+'use strict';
 
-const express = require('express');
-const router = express.Router();
-const { success, error } = require('../Views/message');
+const {success, error} 	= require('../Views/message');
+const handler           = require('../Middlewares');
+const path              = require('../path') + '/tags';
+const express           = require('express');
+const router            = express.Router();
 
-const { models } = require('../Models');
+router.get(path + '/id/:id', 
+		handler.auths.authenticated, 
+		handler.tags.getById);
+	
+router.get(path + '/delete/id/:id', 
+		handler.auths.authenticated, 
+		handler.tags.del);
+			
 
-const tags = models.tags;
-const quizzes = models.quizzes;
-
-// get all quizzes of tag by its id
-router.get('/getQuizzes/:id', (req, res) => {
-	tags.findAll({
-		attributes: ['name'],
-		include: [quizzes],
-		where: {
-			id: req.params.id
-		}
-	}).then(d => {
-		res.send(success(d));
-	}).catch(e => {
-		res.send.error(e);
-	});
-});
-
-// create new tags in database
-router.post('/new', (req, res) => {
-	let content = req.body;
-	let row = tags.build(content);
-	row.save().then(d => {
-		res.send(success(d));
-	}).catch(e => {
-		res.send(error(e));
-	});
-})
-
+router.post(path + '/new', 
+		handler.auths.authenticated, 
+		handler.tags.create);
 
 module.exports = router;

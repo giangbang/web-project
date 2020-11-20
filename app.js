@@ -4,15 +4,14 @@ if (process.env.NOVE_ENV !== 'production') {
 	require('dotenv').config();
 }
 
-const express 			= require('express');
-const session			= require('express-session');
-const passport			= require('passport');
-const routes 			= require('./src/Routes');
-const {init} 			= require('./src/Models');
-const controller		= require('./src/Controllers');
-const app 				= express();
+const express     = require('express');
+const session	  = require('express-session');
+const passport	  = require('passport');
+const routes 	  = require('./src/Routes');
+const {init} 	  = require('./src/Models');
+const controller  = require('./src/Controllers');
+const app         = express();
 
-let _path = process.env.API_PATH || '';
 
 app.use(express.json());
 app.use(session({
@@ -21,17 +20,17 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }));
+
 controller.passport(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(_path+'/users', routes.userRouter);	
-app.use(_path+'/quizzes', routes.quizRouter);
-app.use(_path+'/courses', routes.courseRouter);
-app.use(_path+'/tags', routes.tagRouter);
-app.use(_path+'/comments', routes.commentRouter);
-app.use(_path+'/submissions', routes.submissionRouter);
 
-
+app.use(routes.userRouter);	
+app.use(routes.quizRouter);
+app.use(routes.courseRouter);
+app.use(routes.tagRouter);
+app.use(routes.commentRouter);
+app.use(routes.submissionRouter);
 
 init().then(function() {
 	app.listen(process.env.PORT, function() {

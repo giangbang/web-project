@@ -1,26 +1,23 @@
-'use strict';
-
+'use strict'
 
 const {success, error} 	= require('../Views/message');
+const handler 			= require('../Middlewares');
+const path              = require('../path');
 const express 			= require('express');
 const passport 			= require('passport');
-const handler 			= require('../Middlewares');
 const router 			= express.Router();
 
-
-let path = (process.env.API_PATH || '') + '/users';
-
-router.get('/getbyName/:name', 
+router.get(path + '/users/name/:name', 
 		handler.users.getByName);
 		
-router.get('/getbyId/:id', 
+router.get(path + '/users/id/:id', 
 		handler.auths.authenticated, 
 		handler.users.getById);
 		
-router.post('/new', 
+router.post(path + '/users/new', 
 		handler.users.create);
 		
-router.post('/login', passport.authenticate('local', {
+router.post(path + '/login', passport.authenticate('local', {
 	failureRedirect: path+'/loginFail',
 }), function (req, res) {
     res.redirect(path+'/loginSuccess');
@@ -29,17 +26,9 @@ router.post('/login', passport.authenticate('local', {
 router.get("/loginFail", (req,res)=> {
 	res.send(error("Username or password is incorrect"));
 });
+
 router.get("/loginSuccess" ,(req,res)=> {
 	res.send(success("Welcome!"));
 });
-
-
-router.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/users/login' }),
-  function(req, res) {
-    res.redirect('/users/loginOK');
-  });
-
-
 
 module.exports = router;
