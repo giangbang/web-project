@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const LocalStrategy	 		= require('passport-local').Strategy;
 const { success, error } 	= require('../Views/message');
@@ -9,10 +9,10 @@ module.exports = function initialize(passport) {
 	const authenticateUser = async (username, password, done) => {
 	
 		let res = await controller.users.getByName(username);
-		if (!res.success) {
+		if (res.status != 200) {
 			return done(null, false, res);
 		};
-		let user = res.message;
+		let user = res.data;
 		try {
 			if (await controller.auth.verify(password, user.password)) {
 				return done(null, user);
@@ -24,7 +24,7 @@ module.exports = function initialize(passport) {
 		}
 	};
 	
-	passport.use(new LocalStrategy(authenticateUser));
+	passport.use(new LocalStrategy({usernameField:'email'}, authenticateUser));
 	passport.serializeUser((user, done) => {  done(null, user.id) });
 	passport.deserializeUser(async (id, done) => { 
 		let user = await controller.users.getById(id);

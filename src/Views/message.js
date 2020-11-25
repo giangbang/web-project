@@ -2,15 +2,15 @@
 
 function successMessage(data) {
 	return {
-		success: true,
-		message: data
+		status: 200,
+		data: data
 	}
 }
 
 function errorMessage(error) {
 	return {
-		success: false,
-		message: error
+		status: 400,
+		data: error
 	}
 }
 

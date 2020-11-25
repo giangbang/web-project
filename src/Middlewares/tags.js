@@ -8,10 +8,10 @@ module.exports.getById = async function(req, res, next) {
 	try {
 		let id = req.params.id;
 		let q = await controller.tags.getById(id);
-		res.send(q);
+		res.status(q.status).send(q.data);
 		next();
 	} catch (e) {
-		res.send(error(""+e));
+		res.status(500).send((""+e));
 	}
 };
 
@@ -19,10 +19,10 @@ module.exports.create = async function(req, res, next) {
 	try {
 		let content = req.body.content;
 		let q = await controller.tags.create(content);
-		res.send(q);
+		res.status(q.status).send(q.data);
 		next();
 	} catch (e) {
-		res.send(error(""+e));
+		res.status(500).send((""+e));
 	}
 };
 
@@ -30,10 +30,10 @@ module.exports.del = async function(req, res, next) {
 	try {
 		let id = req.params.id;
 		let q = await controller.tags.del(id);
-		res.send(q);
+		res.status(500).send(q.data);
 		next();
 	} catch(e) {
-		res.send(error(e+''));
+		res.status(500).send((e+''));
 	};
 };
 

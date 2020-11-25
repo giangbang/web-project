@@ -8,21 +8,32 @@ module.exports.getByCode = async function(req, res, next) {
 	try {
 		let code = req.params.code;
 		let q = await controller.courses.getByCode(code);
-		res.send(q);
+		res.status(q.status).send(q.data);
 		next();
 	} catch (e) {
-		res.send(error(""+e));
+		res.status(500).send((""+e));
+	}
+};
+
+module.exports.getById = async function(req, res, next) {
+	try {
+		let id = req.query.id;
+		let q = await controller.courses.getById(id);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send((""+e));
 	}
 };
 
 module.exports.create = async function(req, res, next) {
 	try {
-		let content = req.body.content;
+		let content = req.body;
 		let q = await controller.courses.create(content);
-		res.send(q);
+		res.status(q.status).send(q.data);
 		next();
 	} catch (e) {
-		res.send(error(""+e));
+		res.status(500).send((""+e));
 	}
 };
 
@@ -30,11 +41,22 @@ module.exports.del = async function(req, res, next) {
 	try {
 		let id = req.params.id;
 		let q = await controller.courses.del(id);
-		res.send(q);
+		res.status(q.status).send(q.data);
 		next();
 	} catch(e) {
-		res.send(error(e+''));
+		res.status(500).send((e+''));
 	};
 };
+
+module.exports.getAll = async function(req, res, next) {
+	try {
+		let q = await controller.courses.getAll();
+		res.status(q.status).send(q.data);
+		next();
+	} catch(e) {
+		res.status(500).send((e+''));
+	};
+};
+
 
 

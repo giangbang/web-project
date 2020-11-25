@@ -8,3 +8,11 @@ module.exports.authenticated = function(req, res, next) {
 	}
 	else res.send(error("You must log in first"));
 }
+
+module.exports.loginFail = (req, res, next) => {
+  res.status(449).send("Password or Username is incorrect");
+}
+
+module.exports.loginSucceed = (req, res, next) => {
+  next();
+}

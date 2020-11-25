@@ -9,10 +9,10 @@ module.exports.create = async function(req, res, next) {
 	try {
 		let content = req.body.content;
 		let q = await controller.submissions.create(content);
-		res.send(q);
+		res.status(q.status).send(q.data);
 		next();
 	} catch (e) {
-		res.send(error(""+e));
+		res.status(500).send((""+e));
 	}
 };
 
@@ -20,10 +20,10 @@ module.exports.del = async function(req, res, next) {
 	try {
 		let id = req.params.id;
 		let q = await controller.submissions.del(id);
-		res.send(q);
+		res.status(q.status).send(q.data);
 		next();
 	} catch(e) {
-		res.send(error(e+''));
+		res.status(500).send((e+''));
 	};
 };
 

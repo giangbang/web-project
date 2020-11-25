@@ -21,6 +21,16 @@ async function getByCode(code) {
 	}
 };
 
+async function getById(id) {
+  try {
+		let course =courses.findByPk(id);
+		if (course == null) return error("Course not found");
+		return success(course);
+	} catch (e) {
+		return error(e);
+	}
+}
+
 async function create(course) {
 	try {
 		let row = courses.build(course);
@@ -31,6 +41,15 @@ async function create(course) {
 		return error(e);
 	}
 };
+
+async function getAll() {
+  try {
+    let course = await courses.findAll();
+    return success(course);
+  } catch(e) {
+    return error(e);
+  }
+}
 
 async function del(id) {
 	try {
@@ -45,6 +64,8 @@ async function del(id) {
 
 module.exports = {
 	getByCode: getByCode,
+  getById, getById,
 	create: create, 
-	del: del
+	del: del,
+  getAll: getAll
 }

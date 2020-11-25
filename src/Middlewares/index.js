@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports.users 	        = require('./users');
+module.exports.users 	          = require('./users');
 module.exports.courses	        = require('./courses');
 module.exports.quizzes	        = require('./quizzes');
 module.exports.comments         = require('./comments');

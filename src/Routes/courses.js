@@ -7,16 +7,24 @@ const express           = require('express');
 const router            = express.Router();
 
 router.get(path + '/code/:code', 
-		handler.auths.authenticated, 
+		// handler.auths.authenticated, 
 		handler.courses.getByCode);
+
+router.get(path + '/id', 
+		// handler.auths.authenticated, 
+		handler.courses.getById);
+    
+router.get(path, 
+		// handler.auths.authenticated, 
+		handler.courses.getAll);
 	
-router.get('/delete/id/:id', 
+router.get(path + '/delete/id/:id', 
 		handler.auths.authenticated, 
 		handler.courses.del);
 			
 
-router.post('/new', 
-		handler.auths.authenticated, 
+router.post(path + '/new', 
+		// handler.auths.authenticated, 
 		handler.courses.create);
 
 module.exports = router;
