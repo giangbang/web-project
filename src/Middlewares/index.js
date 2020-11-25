@@ -7,3 +7,4 @@ module.exports.comments         = require('./comments');
 module.exports.submissions	    = require('./submissions');
 module.exports.tags             = require('./tags');
 module.exports.auths            = require('./auths');
+module.exports.testCases        = require('./testCases');

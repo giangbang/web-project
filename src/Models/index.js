@@ -2,23 +2,25 @@
 
 const { Sequelize, Model } = require('sequelize');
 
-const userModel 		= require('./users');
-const roleModel 		= require('./roles');
-const tagModel 			= require('./tags');
-const commentModel 		= require('./comments');
+const userModel 		    = require('./users');
+const roleModel 		    = require('./roles');
+const tagModel 			    = require('./tags');
+const commentModel 		  = require('./comments');
 const submissionModel 	= require('./submissions');
-const pointModel 		= require('./points');
-const courseModel 		= require('./courses');
-const quizModel 		= require('./quizzes');
+const pointModel 		    = require('./points');
+const courseModel 		  = require('./courses');
+const quizModel 		    = require('./quizzes');
+const testCaseModel 		= require('./testCases');
 
-class users 		extends Model {};
+class users 		  extends Model {};
 class comments 		extends Model {};
-class roles 		extends Model {};
-class submissions 	extends Model {};
-class points 		extends Model {};
+class roles 		  extends Model {};
+class submissions extends Model {};
+class points 		  extends Model {};
 class courses 		extends Model {};
-class tags 			extends Model {};
+class tags 			  extends Model {};
 class quizzes 		extends Model {};
+class testCases 	extends Model {};
 
 
 let database = new Sequelize(
@@ -73,6 +75,11 @@ quizzes.init(quizModel.schema, {
 	modelName: quizModel.name
 });
 
+testCases.init(testCaseModel.schema, {
+	sequelize : database,
+	modelName: testCaseModel.name,
+	timestamps: false
+});
 
 // ==============================================
 
@@ -129,6 +136,12 @@ points.belongsTo(quizzes, {
 });
 quizzes.hasMany(points);
 
+testCases.belongsTo(quizzes, {
+	foreignKey: { allowNull: false },
+	onDelete: 'CASCADE'
+});
+quizzes.hasMany(testCases);
+
 async function init(force =  false) {
 	await database.authenticate();
 	await database.sync({force: force});
@@ -137,7 +150,7 @@ async function init(force =  false) {
 	if (roleList.length === 0) {
 		for (const [name, role] of Object.entries(roleModel.defaults)) {
 			let newRole = roles.build(role);
-			await newRole.save();
+			newRole.save();
 		}
 	}
 }

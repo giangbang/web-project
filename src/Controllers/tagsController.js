@@ -1,14 +1,28 @@
 'use strict'
 
-const { success, error } = require('../Views/message');
-const { models }		 = require('../Models');
+const { success, error }  = require('../Views/message');
+const { models }		      = require('../Models');
 
-const tags = models.tags;
+const tags                = models.tags;
+const courses             = models.courses;
+
+async function getByCourse(id) {
+  try {
+		let tag = await courses.findOne({
+      where: { id: id },
+      include: [tags],
+      attributes: []
+    });
+		return success(tag);
+	} catch (e) {
+		return error(e);
+	}
+}
 
 async function create(tag) {
 	let row = tags.build(tag);
 	try {
-		let row = await row.save();
+		row = await row.save();
 		if (row == null) return error("Cannot create tag");
 		return success(row);
 	} catch (e) {
@@ -40,8 +54,19 @@ async function getById(id) {
 	}
 }
 
+async function getAll() {
+  try {
+		let tag = await tags.findAll();
+		return success(tag);
+	} catch (e) {
+		return error(e)
+	}
+}
+
 module.exports = {
 	getById: getById,
 	create: create,
-	del: del
+	del: del,
+  getAll: getAll,
+  getByCourse: getByCourse
 }

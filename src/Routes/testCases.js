@@ -2,29 +2,24 @@
 
 const {success, error} 	= require('../Views/message');
 const handler           = require('../Middlewares');
-const path              = require('../path') + '/tags';
+const path              = require('../path') + '/testcases';
 const express           = require('express');
 const router            = express.Router();
 
-router.get(path + '/id/:id', 
+router.get(path, 
 		// handler.auths.authenticated, 
-		handler.tags.getById);
+		handler.testCases.getById);
 	
 router.get(path + '/delete/id/:id', 
 		// handler.auths.authenticated, 
-		handler.tags.del);
-			
-
-router.post(path + '/new', 
-		// handler.auths.authenticated, 
-		handler.tags.create);
+		handler.testCases.del);
 
 router.get(path + '/get', 
 		// handler.auths.authenticated, 
-		handler.tags.getAll);
+		handler.testCases.getAll);			
 
-router.get(path, 
+router.post(path + '/new', 
 		// handler.auths.authenticated, 
-		handler.tags.getByCourse);
-    
+		handler.testCases.create);
+
 module.exports = router;

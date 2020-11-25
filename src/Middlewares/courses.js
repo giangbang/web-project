@@ -19,7 +19,7 @@ module.exports.getById = async function(req, res, next) {
 	try {
 		let id = req.query.id;
 		let q = await controller.courses.getById(id);
-		res.status(q.status).send(q.data);
+		await res.status(q.status).send(q.data);
 		next();
 	} catch (e) {
 		res.status(500).send((""+e));

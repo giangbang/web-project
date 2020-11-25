@@ -23,7 +23,7 @@ async function getByCode(code) {
 
 async function getById(id) {
   try {
-		let course =courses.findByPk(id);
+		let course = await courses.findByPk(id);
 		if (course == null) return error("Course not found");
 		return success(course);
 	} catch (e) {

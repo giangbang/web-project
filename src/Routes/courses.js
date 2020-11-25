@@ -10,11 +10,11 @@ router.get(path + '/code/:code',
 		// handler.auths.authenticated, 
 		handler.courses.getByCode);
 
-router.get(path + '/id', 
+router.get(path, 
 		// handler.auths.authenticated, 
 		handler.courses.getById);
     
-router.get(path, 
+router.get(path + '/get', 
 		// handler.auths.authenticated, 
 		handler.courses.getAll);
 	

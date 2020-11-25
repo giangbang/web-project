@@ -6,11 +6,11 @@ module.exports.authenticated = function(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
 	}
-	else res.send(error("You must log in first"));
+	else res.status(403).send(("You must log in first"));
 }
 
 module.exports.loginFail = (req, res, next) => {
-  res.status(449).send("Password or Username is incorrect");
+  res.status(401).send("Password or Username is incorrect");
 }
 
 module.exports.loginSucceed = (req, res, next) => {

@@ -5,10 +5,10 @@ if (process.env.NOVE_ENV !== 'production') {
 }
 
 const express     = require('express');
-const session	  = require('express-session');
+const session	    = require('express-session');
 const passport	  = require('passport');
-const routes 	  = require('./src/Routes');
-const {init} 	  = require('./src/Models');
+const routes 	    = require('./src/Routes');
+const {init} 	    = require('./src/Models');
 const controller  = require('./src/Controllers');
 const app         = express();
 
@@ -31,6 +31,7 @@ app.use(routes.courseRouter);
 app.use(routes.tagRouter);
 app.use(routes.commentRouter);
 app.use(routes.submissionRouter);
+app.use(routes.testCaseRouter);
 
 init().then(function() {
 	app.listen(process.env.PORT, function() {

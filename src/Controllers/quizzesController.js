@@ -1,24 +1,31 @@
 'use strict'
 
-const { success, error } = require('../Views/message');
-const { models }		 = require('../Models');
+const { success, error }  = require('../Views/message');
+const { models }		      = require('../Models');
 
-const quizzes 	= models.quizzes;
-const comments 	= models.comments;
-const users 	= models.users;
+const quizzes 	          = models.quizzes;
+const comments 	          = models.comments;
+const users 	            = models.users;
+const testCases 	        = models.testCases;
 
 async function getById(id) {
 	try {
 		let quiz = await quizzes.findOne({
 			where: { id: id },
-			include: {
-				model: comments,
-				attributes: { exclude: ['userId', 'quizId'] },
-				include: {
-					model: users,
-					attributes: { exclude: ['password'] }
-				}
-			}
+			include: [
+        {
+          model: comments,
+          attributes: { exclude: ['userId', 'quizId'] },
+          include: {
+            model: users,
+            attributes: { exclude: ['password'] }
+          }        
+        },
+        {
+          model: testCases,
+          attributes: { exclude: ['quizId']}
+        }
+      ]
 		});
 		if (quiz != null) return success(quiz);
 		return error("Quiz not found");
@@ -26,6 +33,16 @@ async function getById(id) {
 		return error(e);
 	}
 };
+
+
+async function getAll() {
+	try {
+		let quiz = await quizzes.findAll();
+		return success(quiz);
+	} catch (e) {
+		return error(e);
+	}
+}
 
 async function del(id) {
 	try {
@@ -52,5 +69,6 @@ async function create(content) {
 module.exports = {
 	getById: getById,
 	create: create,
-	del: del
+	del: del,
+  getAll: getAll
 }

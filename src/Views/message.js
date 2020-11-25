@@ -10,7 +10,7 @@ function successMessage(data) {
 function errorMessage(error) {
 	return {
 		status: 400,
-		data: error
+		data: error+''
 	}
 }
 
