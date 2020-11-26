@@ -51,7 +51,7 @@ async function getByUserAndQuiz(userId, quizId) {
 
 async function getById(id) {
 	try {
-		let submission = await submissions.findOne({
+		let submission = await submissions.findAll({
 			where: { id: id },
 			include: [
         {

@@ -18,7 +18,9 @@ async function create(comment) {
 
 async function del(id) {
 	try {
-		let comment = await comments.findByPk(id);
+		let comment = await comments.findAll({
+      where: {id : id}
+    });
 		if (comment != null) {
 			comment = await comment.destroy();
 			return success(comment);

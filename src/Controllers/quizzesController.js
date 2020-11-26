@@ -10,7 +10,7 @@ const testCases 	        = models.testCases;
 
 async function getById(id) {
 	try {
-		let quiz = await quizzes.findOne({
+		let quiz = await quizzes.findAll({
 			where: { id: id },
 			include: [
         {

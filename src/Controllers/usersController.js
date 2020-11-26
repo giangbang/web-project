@@ -19,7 +19,7 @@ async function del(id) {
 
 async function getByName(name) {
 	try {
-		let res = await users.findOne({
+		let res = await users.findAll({
 			where: {
 				username: name
 			},
@@ -46,7 +46,7 @@ async function create(user) {
 
 async function getById(id) {
 	try {
-		let user = await users.findOne({
+		let user = await users.findAll({
 			where: { id:id },
 			include: [models.roles]
 		});

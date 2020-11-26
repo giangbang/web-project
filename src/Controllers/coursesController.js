@@ -4,7 +4,7 @@ const { success, error } = require('../Views/message');
 const { models }		 = require('../Models');
 
 const courses = models.courses;
-const quizzes = models.quizzes;
+const tags = models.tags;
 
 async function getByCode(code) {
 	try {
@@ -12,7 +12,7 @@ async function getByCode(code) {
 			where: {
 				code: code
 			},
-			include: [quizzes]
+			include: [tags]
 		});
 		if (course == null) return error("Course not found");
 		return success(course);
@@ -23,7 +23,12 @@ async function getByCode(code) {
 
 async function getById(id) {
   try {
-		let course = await courses.findByPk(id);
+		let course = await courses.findAll({
+			where: {
+				id: id
+			},
+			include: [tags]
+		});;
 		if (course == null) return error("Course not found");
 		return success(course);
 	} catch (e) {
