@@ -8,7 +8,7 @@ const quizzes = models.quizzes;
 
 async function getByCode(code) {
 	try {
-		let course = await courses.findOne({
+		let course = await courses.findAll({
 			where: {
 				code: code
 			},

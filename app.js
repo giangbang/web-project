@@ -10,9 +10,10 @@ const passport	  = require('passport');
 const routes 	    = require('./src/Routes');
 const {init} 	    = require('./src/Models');
 const controller  = require('./src/Controllers');
+const cors        = require('cors');
 const app         = express();
 
-
+app.use(cors());
 app.use(express.json());
 app.use(session({
 	cookie: { maxAge: 60000 }, 
