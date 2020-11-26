@@ -21,9 +21,9 @@ router.post(path + '/users/new',
 router.post(path + '/login', passport.authenticate('local', {
 	failureRedirect: '/loginFail',
 }), async function (req, res) {
-  let username = req.body.email;
+  let username = req.body.username;
   let q = await controller.users.getByName(username);
-  res.status(q.status).send((q.data));
+  res.status(q.status).send([(q.data)]);
 });
 
 router.get("/loginFail", 

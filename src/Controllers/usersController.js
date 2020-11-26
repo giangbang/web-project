@@ -19,14 +19,15 @@ async function del(id) {
 
 async function getByName(name) {
 	try {
-		let res = await users.findAll({
+		let res = await users.findOne({
 			where: {
 				username: name
 			},
 			include: [models.roles]
 		});
-		if (res !== null)
-			return (success(res.dataValues));
+		if (res !== null) {
+			return (success(res));
+    }
 		else return error("User not found");
 	} catch(e) {
 		return error(e+"");
@@ -46,7 +47,7 @@ async function create(user) {
 
 async function getById(id) {
 	try {
-		let user = await users.findAll({
+		let user = await users.findOne({
 			where: { id:id },
 			include: [models.roles]
 		});

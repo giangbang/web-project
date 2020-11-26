@@ -24,7 +24,7 @@ module.exports = function initialize(passport) {
 		}
 	};
 	
-	passport.use(new LocalStrategy({usernameField:'email'}, authenticateUser));
+	passport.use(new LocalStrategy({usernameField:'username'}, authenticateUser));
 	passport.serializeUser((user, done) => {  done(null, user.id) });
 	passport.deserializeUser(async (id, done) => { 
 		let user = await controller.users.getById(id);
