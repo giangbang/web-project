@@ -6,8 +6,8 @@ const   controller       = require('../Controllers');
 
 module.exports.edit = async function(req, res, next) {
 	try {
-		let content = req.body.content, 
-			id = req.body.id;
+		let content = req.body.content;
+    let id = req.body.id;
 		let q = await controller.comments.edit(id, content);
 		res.status(q.status).send(q.data);
 		next();
@@ -18,7 +18,8 @@ module.exports.edit = async function(req, res, next) {
 
 module.exports.create = async function(req, res, next) {
 	try {
-		let content = req.body.content;
+		let content = req.body;
+    content.userId = req.user.data.id;
 		let q = await controller.comments.create(content);
 		res.status(q.status).send(q.data);
 		next();
@@ -29,7 +30,7 @@ module.exports.create = async function(req, res, next) {
 
 module.exports.del = async function(req, res, next) {
 	try {
-		let id = req.params.id;
+		let id = req.query.id;
 		let q = await controller.comments.del(id);
 		res.status(q.status).send(q.data);
 		next();

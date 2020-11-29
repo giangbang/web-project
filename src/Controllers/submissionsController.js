@@ -20,11 +20,23 @@ async function create(submission) {
 	}
 }
 
+async function getAllByQuiz(id) {
+  try {
+		let submission = await submissions.findAll({
+			where: { quizId : id }
+		});
+		if (submission != null) return success(submission);
+		return error("Submission not found");
+	} catch (e) {
+		return error(e);
+	}
+}
+
 async function getByUserAndQuiz(userId, quizId) {
 	try {
-		let submission = await users.findAll({
+		let submission = await users.findOne({
 			where: { id : userId },
-      attributes: ['id', 'username'],
+      attributes: ['id', 'username', 'fullname'],
 			include: [
         {
           model: submissions,
@@ -51,15 +63,13 @@ async function getByUserAndQuiz(userId, quizId) {
 
 async function getById(id) {
 	try {
-		let submission = await submissions.findAll({
+		let submission = await submissions.findOne({
 			where: { id: id },
 			include: [
         {
           model: quizzes,
-          attributes: [],
           include: {
-            model: testCases,
-            attributes: { exclude: ['password'] }
+            model: testCases
           }        
         }
       ]
@@ -89,5 +99,6 @@ module.exports = {
 	create: create,
 	del: del,
   getById: getById,
-  getByUserAndQuiz: getByUserAndQuiz
+  getByUserAndQuiz: getByUserAndQuiz,
+  getAllByQuiz: getAllByQuiz
 }

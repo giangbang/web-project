@@ -10,16 +10,12 @@ const testCases 	        = models.testCases;
 
 async function getById(id) {
 	try {
-		let quiz = await quizzes.findAll({
+		let quiz = await quizzes.findOne({
 			where: { id: id },
 			include: [
         {
           model: comments,
-          attributes: { exclude: ['userId', 'quizId'] },
-          include: {
-            model: users,
-            attributes: { exclude: ['password'] }
-          }        
+          attributes: { exclude: ['userId', 'quizId'] }        
         },
         {
           model: testCases,
@@ -27,9 +23,11 @@ async function getById(id) {
         }
       ]
 		});
+    console.log(quiz);
 		if (quiz != null) return success(quiz);
 		return error("Quiz not found");
 	} catch (e) {
+    console.log('error')
 		return error(e);
 	}
 };

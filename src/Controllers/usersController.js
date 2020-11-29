@@ -1,7 +1,8 @@
 'use strict'
 
-const { success, error } = require('../Views/message');
-const { models } 		 = require('../Models');
+const { success, error }  = require('../Views/message');
+const { models } 		      = require('../Models');
+const controller          = require('../Controllers');
 
 const users = models.users;
 
@@ -22,8 +23,7 @@ async function getByName(name) {
 		let res = await users.findOne({
 			where: {
 				username: name
-			},
-			include: [models.roles]
+			}
 		});
 		if (res !== null) {
 			return (success(res));
@@ -35,6 +35,7 @@ async function getByName(name) {
 }
 
 async function create(user) {
+  user.password = await controller.auth.encrypt(user.password);
 	let row = users.build(user);
 	try {
 		row = await row.save();
@@ -45,11 +46,31 @@ async function create(user) {
 	}
 }
 
+async function update(newUser) {
+  let id = newUser.id;
+  try {
+    let user = await getById(id);
+    if (user.status != 200) return error("User not found");
+    user = user.data;
+    for (let [key, value] of Object.entries(newUser)) {
+      if (key == 'id') continue;
+      if (key == 'password') {
+        value = await controller.auth.encrypt(value);
+      }
+      user[key] = value;
+    }
+    
+    newUser = await user.save();
+    return success(newUser);
+  } catch(e) {
+    return error('' + e);
+  }
+}
+
 async function getById(id) {
 	try {
 		let user = await users.findOne({
-			where: { id:id },
-			include: [models.roles]
+			where: { id:id }
 		});
 		if (user == null) return error("User not found");
 		return success(user);
@@ -62,5 +83,6 @@ module.exports = {
 	getByName: getByName,
 	getById: getById,
 	create: create,
-	del: del
+	del: del,
+  update: update
 }

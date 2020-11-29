@@ -6,22 +6,27 @@ const path              = require('../path') + '/submissions';
 const express           = require('express');
 const router            = express.Router();
 
-router.get(path + '/delete/id/:id', 
-		// handler.auths.authenticated, 
+router.delete(path + '/delete/id/', 
+		handler.auths.authenticated,
+    handler.auths.submissionVerify,
 		handler.submissions.del);
 			
 
 router.post(path+'/new', 
-		// handler.auths.authenticated, 
+		handler.auths.authenticated, 
 		handler.submissions.create);
     
 router.get(path+'/id', 
-		// handler.auths.authenticated, 
+		handler.auths.authenticated, 
 		handler.submissions.getById);
     
-router.get(path, 
-		// handler.auths.authenticated, 
+router.get(path+'/quizzes/id', 
+		handler.auths.authenticated, 
 		handler.submissions.getByUserAndQuiz);
+    
+router.get(path+'/quizzes/all/id', 
+		handler.auths.authenticated, 
+		handler.submissions.getAllByQuiz);
 	
 
 module.exports = router;

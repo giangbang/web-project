@@ -16,7 +16,7 @@ const app         = express();
 app.use(cors());
 app.use(express.json());
 app.use(session({
-	cookie: { maxAge: 60000 }, 
+	cookie: { maxAge: 600000 }, 
 	secret: process.env.SESSION_SECRET || 'study',
 	resave: false,
 	saveUninitialized: false
@@ -29,7 +29,6 @@ app.use(passport.session());
 app.use(routes.userRouter);	
 app.use(routes.quizRouter);
 app.use(routes.courseRouter);
-app.use(routes.tagRouter);
 app.use(routes.commentRouter);
 app.use(routes.submissionRouter);
 app.use(routes.testCaseRouter);

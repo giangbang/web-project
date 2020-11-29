@@ -8,11 +8,10 @@ const tags = models.tags;
 
 async function getByCode(code) {
 	try {
-		let course = await courses.findAll({
+		let course = await courses.findOne({
 			where: {
 				code: code
-			},
-			include: [tags]
+			}
 		});
 		if (course == null) return error("Course not found");
 		return success(course);
@@ -23,11 +22,10 @@ async function getByCode(code) {
 
 async function getById(id) {
   try {
-		let course = await courses.findAll({
+		let course = await courses.findOne({
 			where: {
 				id: id
-			},
-			include: [tags]
+			}
 		});;
 		if (course == null) return error("Course not found");
 		return success(course);

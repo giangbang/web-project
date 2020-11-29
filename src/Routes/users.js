@@ -11,10 +11,20 @@ const router 			      = express.Router();
 // router.get(path + '/users/name/:name', 
 		// handler.users.getByName);
 		
-router.get(path + '/users/:id', 
-		handler.auths.authenticated, 
+router.get(path + '/users/id', 
+    handler.auths.authenticated,
 		handler.users.getById);
+    
+router.delete(path + '/users/delete/id', 
+    handler.auths.authenticated,
+    handler.auths.userVerify,
+		handler.users.del);
 		
+router.post(path + '/users/update', 
+    handler.auths.authenticated,
+    handler.auths.userVerify,
+		handler.users.update);
+
 router.post(path + '/users/new', 
 		handler.users.create);
 		
@@ -23,7 +33,7 @@ router.post(path + '/login', passport.authenticate('local', {
 }), async function (req, res) {
   let username = req.body.username;
   let q = await controller.users.getByName(username);
-  res.status(q.status).send([(q.data)]);
+  res.status(q.status).send(q.data);
 });
 
 router.get("/loginFail", 

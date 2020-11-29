@@ -6,20 +6,20 @@ const path              = require('../path') + '/quizzes';
 const express           = require('express');
 const router            = express.Router();
 
-router.get(path, 
-		// handler.auths.authenticated, 
+router.get(path + '/id', 
 		handler.quizzes.getById);
 	
-router.get(path + '/delete/id/:id', 
-		// handler.auths.authenticated, 
+router.delete(path + '/delete/id',
+    handler.auths.authenticated, 
+    handler.auths.administrator,
 		handler.quizzes.del);
 
-router.get(path + '/get', 
-		// handler.auths.authenticated, 
+router.get(path + '/all',  
 		handler.quizzes.getAll);			
 
 router.post(path + '/new', 
-		// handler.auths.authenticated, 
+		handler.auths.authenticated, 
+		handler.auths.administrator, 
 		handler.quizzes.create);
 
 module.exports = router;

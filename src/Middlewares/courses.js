@@ -6,7 +6,7 @@ const   controller       = require('../Controllers');
 
 module.exports.getByCode = async function(req, res, next) {
 	try {
-		let code = req.params.code;
+		let code = req.query.code;
 		let q = await controller.courses.getByCode(code);
 		res.status(q.status).send(q.data);
 		next();
@@ -39,7 +39,7 @@ module.exports.create = async function(req, res, next) {
 
 module.exports.del = async function(req, res, next) {
 	try {
-		let id = req.params.id;
+		let id = req.query.id;
 		let q = await controller.courses.del(id);
 		res.status(q.status).send(q.data);
 		next();

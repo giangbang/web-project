@@ -3,15 +3,17 @@
 const {success, error} 	= require('../Views/message');
 const handler           = require('../Middlewares');
 const path              = require('../path') + '/comments';
-const express	        = require('express');
+const express	          = require('express');
 const router            = express.Router();
 
 router.post(path+'/edit', 
 		handler.auths.authenticated, 
+		handler.auths.commentVerify, 
 		handler.comments.edit);
 	
-router.get(path+'/delete/id/:id', 
+router.delete(path+'/delete/id/', 
 		handler.auths.authenticated, 
+    handler.auths.commentVerify,
 		handler.comments.del);
 			
 

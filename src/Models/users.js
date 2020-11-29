@@ -21,7 +21,17 @@ module.exports = {
 		fullname: {
 			type: DataTypes.STRING,
 			allowNull: false
-		}
+		},
+    admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    }
 	},
-	name: 'users'
+	name: 'users',
+  admin: {
+    username: 'admin',
+    password: 'admin',
+    fullname: 'admin',
+    admin: true
+  }
 }

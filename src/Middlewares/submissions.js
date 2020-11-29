@@ -8,6 +8,7 @@ const   controller       = require('../Controllers');
 module.exports.create = async function(req, res, next) {
 	try {
 		let content = req.body;
+    content.userId = req.user.data.id;
 		let q = await controller.submissions.create(content);
 		res.status(q.status).send(q.data);
 		next();
@@ -18,7 +19,7 @@ module.exports.create = async function(req, res, next) {
 
 module.exports.del = async function(req, res, next) {
 	try {
-		let id = req.params.id;
+		let id = req.query.id;
 		let q = await controller.submissions.del(id);
 		res.status(q.status).send(q.data);
 		next();
@@ -40,9 +41,20 @@ module.exports.getById = async function(req, res, next) {
 
 module.exports.getByUserAndQuiz = async function(req, res, next) {
 	try {
-		let userid = req.query.userId;
-    let quizid = req.query.quizId;
+		let userid = req.user.data.id;
+    let quizid = req.query.id;
 		let q = await controller.submissions.getByUserAndQuiz(userid, quizid);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send(e+'');
+	}
+};
+
+module.exports.getAllByQuiz = async function(req, res, next) {
+	try {
+    let id = req.query.id;
+		let q = await controller.submissions.getAllByQuiz(id);
 		res.status(q.status).send(q.data);
 		next();
 	} catch (e) {

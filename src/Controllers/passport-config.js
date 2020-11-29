@@ -10,7 +10,7 @@ module.exports = function initialize(passport) {
 	
 		let res = await controller.users.getByName(username);
 		if (res.status != 200) {
-			return done(null, false, res);
+			return done(null, false, res.data);
 		};
 		let user = res.data;
 		try {

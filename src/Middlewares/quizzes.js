@@ -39,7 +39,7 @@ module.exports.create = async function(req, res, next) {
 
 module.exports.del = async function(req, res, next) {
 	try {
-		let id = req.params.id;
+		let id = req.query.id;
 		let q = await controller.quizzes.del(id);
 		res.status(q.status).send(q.data);
 		next();

@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const { success, error } = require('../Views/message');
-const { models }		 = require('../Models');
+const { success, error }  = require('../Views/message');
+const { models }		      = require('../Models');
 
 const comments = models.comments;
 
@@ -18,7 +18,7 @@ async function create(comment) {
 
 async function del(id) {
 	try {
-		let comment = await comments.findAll({
+		let comment = await comments.findOne({
       where: {id : id}
     });
 		if (comment != null) {
@@ -31,9 +31,19 @@ async function del(id) {
 	}
 }
 
+async function getById(id) {
+	try {
+		let comment = await comments.findByPk(id);
+		if (comment == null) return error("Comment not found");
+		return success(comment);
+	} catch (e) {
+		return error(e);
+	}
+}
+
 async function edit(id, content) {
 	try {
-		let comment = comments.findByPk(id);
+		let comment = await comments.findByPk(id);
 		if (comment == null) return error("Comment not found");
 		comment.content = content;
 		comment = await comment.save();
@@ -47,5 +57,6 @@ async function edit(id, content) {
 module.exports = {
 	create: create,
 	del: del,
-	edit: edit
+	edit: edit,
+  getById: getById
 }
