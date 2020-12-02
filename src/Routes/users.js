@@ -15,6 +15,11 @@ router.get(path + '/users/id',
     handler.auths.authenticated,
 		handler.users.getById);
     
+router.get(path + '/users/all', 
+    handler.auths.authenticated,
+    handler.auths.administrator,
+		handler.users.getAll);
+    
 router.delete(path + '/users/delete/id', 
     handler.auths.authenticated,
     handler.auths.userVerify,

@@ -79,10 +79,20 @@ async function getById(id) {
 	};
 }
 
+async function getAll() {
+  try {
+		let user = await users.findAll();
+		return success(user);
+	} catch (e) {
+		return error(e+"");
+	};
+}
+
 module.exports = {
 	getByName: getByName,
 	getById: getById,
 	create: create,
 	del: del,
-  update: update
+  update: update,
+  getAll: getAll
 }

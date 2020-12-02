@@ -8,3 +8,4 @@ module.exports.auth 		    = require('./authController');
 module.exports.passport		  = require('./passport-config');
 module.exports.quizzes      = require('./quizzesController');
 module.exports.testCases    = require('./testCasesController');
+module.exports.tags         = require('./tagsController');

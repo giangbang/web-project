@@ -9,7 +9,8 @@ const courseModel 		  = require('./courses');
 const quizModel 		    = require('./quizzes');
 const testCaseModel 		= require('./testCases');
 const sample            = require('./sample');
-const controller        = require('../Controllers')
+const tagModel          = require('./tags');
+const controller        = require('../Controllers');
 
 class users 		  extends Model {};
 class comments 		extends Model {};
@@ -17,6 +18,7 @@ class submissions extends Model {};
 class courses 		extends Model {};
 class quizzes 		extends Model {};
 class testCases   extends Model {};
+class tags        extends Model {};
 
 
 let database = new Sequelize(
@@ -61,6 +63,11 @@ testCases.init(testCaseModel.schema, {
 	timestamps: false
 });
 
+tags.init(tagModel.schema, {
+	sequelize : database,
+	modelName: tagModel.name
+});
+
 
 // ==============================================
 
@@ -76,11 +83,17 @@ comments.belongsTo(quizzes, {
 });
 quizzes.hasMany(comments);
 
-quizzes.belongsTo(courses, {
+quizzes.belongsTo(tags, {
 	foreignKey: { allowNull: false },
 	onDelete: 'CASCADE'
 });
-courses.hasMany(quizzes);
+tags.hasMany(quizzes);
+
+tags.belongsTo(courses, {
+	foreignKey: { allowNull: false },
+	onDelete: 'CASCADE'
+});
+courses.hasMany(tags);
 
 submissions.belongsTo(quizzes, {
 	foreignKey: { allowNull: false },

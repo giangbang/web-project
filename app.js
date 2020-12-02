@@ -13,10 +13,10 @@ const controller  = require('./src/Controllers');
 const cors        = require('cors');
 const app         = express();
 
-app.use(cors());
+app.use(cors({credentials: true, origin: process.env.HOST}));
 app.use(express.json());
 app.use(session({
-	cookie: { maxAge: 600000 }, 
+	cookie: { maxAge: 36000000 }, 
 	secret: process.env.SESSION_SECRET || 'study',
 	resave: false,
 	saveUninitialized: false
@@ -32,6 +32,7 @@ app.use(routes.courseRouter);
 app.use(routes.commentRouter);
 app.use(routes.submissionRouter);
 app.use(routes.testCaseRouter);
+app.use(routes.tagRouter);
 
 init().then(function() {
 	app.listen(process.env.PORT, function() {
