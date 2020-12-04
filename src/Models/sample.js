@@ -43,13 +43,13 @@ let course1 = {
 let quiz1 = {
   title: "bai 1 khoa 1",
   content: "hello",
-  courseId: 1
+  tagId: 1
 }
 
 let quiz2 = {
   title: "bai 2 khoa 1",
   content: "hello world",
-  courseId: 1
+  tagId: 1
 }
 
 let comment2 = {
@@ -65,6 +65,17 @@ let comment1 = {
   quizId: 1
 }
 
+let tag1 = {
+  name: "string",
+  courseId: 1
+}
+
+
+let tag2 = {
+  name: "string2",
+  courseId: 2
+}
+
 module.exports = async () => {
   let list = await controller.courses.getAll();
   if (list.data.length != 0) return ;
@@ -73,8 +84,10 @@ module.exports = async () => {
     await controller.users.create(user2);
     controller.courses.create(course1);
     controller.courses.create(course2);
-    controller.quizzes.create(quiz1);
+    await controller.tags.create(tag1);
+    await controller.tags.create(tag2);
     await controller.quizzes.create(quiz2);
+    await controller.quizzes.create(quiz1);
     controller.submissions.create(submission1);
     controller.submissions.create(submission2);
     await controller.comments.create(comment2);

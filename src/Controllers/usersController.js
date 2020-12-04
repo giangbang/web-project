@@ -8,7 +8,9 @@ const users = models.users;
 
 async function del(id) {
 	try {
-		let user = await users.findByPk(id);
+		let user = await users.findOne({
+      where: {id : id}
+    });
 		if (user == null) return error("User not found");
 		user = await user.destroy();
 		if (user != null) return success(user);
@@ -70,7 +72,8 @@ async function update(newUser) {
 async function getById(id) {
 	try {
 		let user = await users.findOne({
-			where: { id:id }
+			where: { id:id },
+      attributes: { exclude: ['password']}
 		});
 		if (user == null) return error("User not found");
 		return success(user);
@@ -81,7 +84,9 @@ async function getById(id) {
 
 async function getAll() {
   try {
-		let user = await users.findAll();
+		let user = await users.findAll({
+      attributes: { exclude: ['password']}
+    });
 		return success(user);
 	} catch (e) {
 		return error(e+"");

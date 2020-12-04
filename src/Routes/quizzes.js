@@ -15,7 +15,10 @@ router.delete(path + '/delete/id',
 		handler.quizzes.del);
 
 router.get(path + '/all',  
-		handler.quizzes.getAll);			
+		handler.quizzes.getAll);	
+
+router.get(path + '/tags/id',  
+		handler.quizzes.getByTag);		
 
 router.post(path + '/new', 
 		handler.auths.authenticated, 

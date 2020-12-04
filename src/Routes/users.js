@@ -17,7 +17,6 @@ router.get(path + '/users/id',
     
 router.get(path + '/users/all', 
     handler.auths.authenticated,
-    handler.auths.administrator,
 		handler.users.getAll);
     
 router.delete(path + '/users/delete/id', 
@@ -40,6 +39,11 @@ router.post(path + '/login', passport.authenticate('local', {
   let q = await controller.users.getByName(username);
   res.status(q.status).send(q.data);
 });
+
+router.get(path + '/logout', function(req, res) {
+  req.logout();
+  res.status(200).send("Log out successfully");
+})
 
 router.get("/loginFail", 
     handler.auths.loginFail);

@@ -7,6 +7,7 @@ const quizzes 	          = models.quizzes;
 const comments 	          = models.comments;
 const users 	            = models.users;
 const testCases 	        = models.testCases;
+const tags                = models.tags;
 
 async function getById(id) {
 	try {
@@ -64,9 +65,23 @@ async function create(content) {
 	}
 }
 
+async function getByTag(id) {
+	try {
+		let quiz = await tags.findOne({
+      where: {id: id},
+      attributes: [],
+      include: [quizzes]
+    });
+		return success(quiz);
+	} catch (e) {
+		return error(e);
+	}
+}
+
 module.exports = {
 	getById: getById,
 	create: create,
 	del: del,
-  getAll: getAll
+  getAll: getAll,
+  getByTag: getByTag
 }
