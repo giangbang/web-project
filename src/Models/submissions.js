@@ -10,7 +10,10 @@ module.exports = {
 		sourceCode: {
 			type: DataTypes.STRING,
 			allowNull: false,
-		}
+		},
+    point: {
+      type: DataTypes.INTEGER
+    }
 	},
 	name: 'submissions'
 }

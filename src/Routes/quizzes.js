@@ -18,7 +18,10 @@ router.get(path + '/all',
 		handler.quizzes.getAll);	
 
 router.get(path + '/tags/id',  
-		handler.quizzes.getByTag);		
+		handler.quizzes.getByTag);	
+
+router.get(path + '/courses/id/',  
+		handler.quizzes.getByCourse);	    
 
 router.post(path + '/new', 
 		handler.auths.authenticated, 

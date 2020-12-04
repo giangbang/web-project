@@ -8,6 +8,26 @@ const comments 	          = models.comments;
 const users 	            = models.users;
 const testCases 	        = models.testCases;
 const tags                = models.tags;
+const courses             = models.courses;
+
+
+async function getByCourse(id) {
+	try {
+		let quiz = await courses.findOne({
+			where: { id: id },
+      attributes: [],
+			include: {
+        model: tags,
+        attributes: ['id'],
+        include: [quizzes],
+      }
+		});
+		if (quiz != null) return success(quiz);
+		return error("Quiz not found");
+	} catch (e) {
+		return error(e+'');
+	}
+};
 
 async function getById(id) {
 	try {
@@ -24,11 +44,9 @@ async function getById(id) {
         }
       ]
 		});
-    console.log(quiz);
 		if (quiz != null) return success(quiz);
 		return error("Quiz not found");
 	} catch (e) {
-    console.log('error')
 		return error(e);
 	}
 };
@@ -83,5 +101,6 @@ module.exports = {
 	create: create,
 	del: del,
   getAll: getAll,
-  getByTag: getByTag
+  getByTag: getByTag,
+  getByCourse: getByCourse
 }
