@@ -22,7 +22,13 @@ async function getByCourse(id) {
         include: [quizzes],
       }
 		});
-		if (quiz != null) return success(quiz);
+		if (quiz != null) {
+      let result = [];
+      for (const tag of quiz.tags) {
+        result = result.concat(tag.quizzes);
+      }
+      return success(result);
+    }
 		return error("Quiz not found");
 	} catch (e) {
 		return error(e+'');
