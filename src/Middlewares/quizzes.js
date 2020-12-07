@@ -14,6 +14,29 @@ module.exports.getAll = async function(req, res, next) {
 	}
 };
 
+module.exports.getHighestPoint = async function(req, res, next) {
+	try {
+		let quizid = req.query.id;
+		let q = await controller.quizzes.getHighestPoint(quizid, 10);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send(e+'');
+	}
+};
+
+module.exports.getUsersPoint = async function(req, res, next) {
+	try {
+		let quizid = req.query.id;
+    let userid = req.user.data.id;
+		let q = await controller.quizzes.getUsersPoint(userid, quizid);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send(e+'');
+	}
+};
+
 module.exports.getByCourse = async function(req, res, next) {
 	try {
 		let id = req.query.id;

@@ -9,6 +9,7 @@ const users 	            = models.users;
 const testCases 	        = models.testCases;
 const tags                = models.tags;
 const courses             = models.courses;
+const submissions         = models.submissions;
 
 
 async function getByCourse(id) {
@@ -34,6 +35,65 @@ async function getByCourse(id) {
 		return error(e+'');
 	}
 };
+
+async function getUsersPoint(userid, quizid) {
+  try {
+		let point = await users.findOne({
+			where: { id: userid },
+			include: [
+        {
+          model: submissions,
+          include: {
+            model: quizzes,
+            attributes: ['id'],
+            where: { id: quizid }
+          },
+          order: [
+            ['point', 'DESC']
+          ],
+          limit: 1
+        }
+      ],
+      attributes: ['id']
+		});
+    
+    if (point == null) 
+      return error("Quiz id not found");
+      
+    let result = { point: undefined }
+      if (point.submissions.length >= 1) {
+        result = { point: (point.submissions)[0].point };
+      }
+		return success(result);
+    
+	} catch (e) {
+		return error(e);
+	}
+}
+
+async function getHighestPoint(quizid, top = 10) {
+  let maxNumQuery = 20;
+  try {
+		let point = await quizzes.findOne({
+      where: { id: quizid },
+			include: [
+        {
+          model: submissions,
+          order: [
+            ['point', 'DESC']
+          ],
+          limit: Math.min(maxNumQuery, top),
+          attributes: ['point', 'id']
+        }
+      ],
+      attributes: ['id']
+		});
+		if (point != null) return success(point.submissions);
+		return error("Quiz id not found");
+	} catch (e) {
+		return error(e);
+	}
+}
 
 async function getById(id) {
 	try {
@@ -108,5 +168,7 @@ module.exports = {
 	del: del,
   getAll: getAll,
   getByTag: getByTag,
-  getByCourse: getByCourse
+  getByCourse: getByCourse,
+  getUsersPoint: getUsersPoint,
+  getHighestPoint: getHighestPoint
 }

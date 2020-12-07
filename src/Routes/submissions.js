@@ -6,10 +6,10 @@ const path              = require('../path') + '/submissions';
 const express           = require('express');
 const router            = express.Router();
 
-router.delete(path + '/delete/id/', 
-		handler.auths.authenticated,
-    handler.auths.submissionVerify,
-		handler.submissions.del);
+// router.delete(path + '/delete/id/', 
+		// handler.auths.authenticated,
+    // handler.auths.submissionVerify,
+		// handler.submissions.del);
 			
 
 router.post(path+'/new', 

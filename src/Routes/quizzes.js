@@ -21,7 +21,14 @@ router.get(path + '/tags/id',
 		handler.quizzes.getByTag);	
 
 router.get(path + '/courses/id/',  
-		handler.quizzes.getByCourse);	    
+		handler.quizzes.getByCourse);
+    
+router.get(path + '/currentUser/points/id/',
+    handler.auths.authenticated, 
+		handler.quizzes.getUsersPoint);	 
+    
+router.get(path + '/points/id',
+		handler.quizzes.getHighestPoint);	
 
 router.post(path + '/new', 
 		handler.auths.authenticated, 

@@ -19,12 +19,21 @@ let user1 = {
 
 let submission1 = {
   sourceCode: "print(hello world)1",
+  point: 10,
   quizId: 1,
   userId: 1
 }
 
 let submission2 = {
   sourceCode: "print(hello world)2",
+  point: 11,
+  quizId : 1,
+  userId : 2
+}
+
+let submission3 = {
+  sourceCode: "print(hello world)2",
+  point: 4,
   quizId : 1,
   userId : 2
 }
@@ -80,18 +89,19 @@ module.exports = async () => {
   let list = await controller.courses.getAll();
   if (list.data.length != 0) return ;
   try {
-    controller.users.create(user1);
+    await controller.users.create(user1);
     await controller.users.create(user2);
-    controller.courses.create(course1);
-    controller.courses.create(course2);
+    await controller.courses.create(course1);
+    await controller.courses.create(course2);
     await controller.tags.create(tag1);
     await controller.tags.create(tag2);
     await controller.quizzes.create(quiz2);
     await controller.quizzes.create(quiz1);
-    controller.submissions.create(submission1);
-    controller.submissions.create(submission2);
+    await controller.submissions.create(submission1);
+    await controller.submissions.create(submission2);
+    await controller.submissions.create(submission3);
     await controller.comments.create(comment2);
-    controller.comments.create(comment1);
+    await controller.comments.create(comment1);
   } catch(e) {
     console.log('cannot init sample data');
   }
