@@ -7,6 +7,8 @@ const submissions 	= models.submissions;
 const quizzes      	= models.quizzes;
 const testCases    	= models.testCases;
 const users       	= models.users;
+const courses       = models.courses;
+const tags          = models.tags;
 
 async function create(submission) {
 	let row = submissions.build(submission);
@@ -26,6 +28,39 @@ async function getAllByQuiz(id) {
 			where: { quizId : id }
 		});
 		if (submission != null) return success(submission);
+		return error("Submission not found");
+	} catch (e) {
+		return error(e);
+	}
+}
+
+async function getByCourse(id) {
+  try {
+		let submission = await courses.findOne({
+			where: { id : id },
+      attributes: ['id'],
+      include: {
+        model: tags,
+        attributes: ['id'],
+        include: {
+          model: quizzes,
+          attributes: ['id'],
+          include: [submissions]
+        }
+      }
+		});
+    console.log(submission);
+		if (submission != null) {
+      let result = [];
+      for (const tag of submission.tags) {
+        for (const quiz of tag.quizzes) {
+          for (const sbm of quiz.submissions) {
+            result = result.concat(sbm);
+          }
+        }
+      }
+      return success(result);
+    }
 		return error("Submission not found");
 	} catch (e) {
 		return error(e);
@@ -100,5 +135,6 @@ module.exports = {
 	del: del,
   getById: getById,
   getByUserAndQuiz: getByUserAndQuiz,
-  getAllByQuiz: getAllByQuiz
+  getAllByQuiz: getAllByQuiz,
+  getByCourse: getByCourse
 }

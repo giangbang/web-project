@@ -28,6 +28,17 @@ module.exports.del = async function(req, res, next) {
 	};
 };
 
+module.exports.getByCourse = async function(req, res, next) {
+	try {
+		let id = req.query.id;
+		let q = await controller.submissions.getByCourse(id);
+		res.status(q.status).send(q.data);
+		next();
+	} catch(e) {
+		res.status(500).send((e+''));
+	};
+};
+
 module.exports.getById = async function(req, res, next) {
 	try {
 		let id = req.query.id;

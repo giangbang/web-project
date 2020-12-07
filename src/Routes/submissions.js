@@ -27,6 +27,10 @@ router.get(path+'/quizzes/id',
 router.get(path+'/quizzes/all/id', 
 		handler.auths.authenticated, 
 		handler.submissions.getAllByQuiz);
+    
+router.get(path+'/courses/id', 
+		handler.auths.authenticated, 
+		handler.submissions.getByCourse);
 	
 
 module.exports = router;
