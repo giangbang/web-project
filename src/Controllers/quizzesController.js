@@ -102,7 +102,11 @@ async function getById(id) {
 			include: [
         {
           model: comments,
-          attributes: { exclude: ['userId', 'quizId'] }        
+          attributes: { exclude: ['userId', 'quizId'] },
+          include: {
+            model: users,
+            attributes: { exclude: ['password']}
+          }
         },
         {
           model: testCases,
@@ -140,9 +144,14 @@ async function del(id) {
 
 async function create(content) {
 	try {
-		let row = quizzes.build(content);
+		let row = quizzes.build(content.quiz);
 		row = await row.save();
+    
 		if (row == null) return error("Cannot create quiz");
+    for (const testCase of content.testCases) {
+      testCase.quizId = row.id;
+      let result = await testCases.create(testCase);
+    }
 		return success(row);
 	} catch (e) {
 		return error(e);
@@ -162,10 +171,27 @@ async function getByTag(id) {
 	}
 }
 
+async function update(id, newQuiz) {
+	try {
+		let quiz = await quizzes.findByPk(id);
+		if (quiz == null) return error("Quiz not found");
+    
+    for (let [key, value] of Object.entries(newQuiz)) {
+      if (key == 'id') continue;
+      quiz[key] = value;
+    }
+    quiz = await quiz.save();
+		return success(quiz);
+	} catch (e) {
+		return error(e);
+	}
+}
+
 module.exports = {
 	getById: getById,
 	create: create,
 	del: del,
+  update: update,
   getAll: getAll,
   getByTag: getByTag,
   getByCourse: getByCourse,

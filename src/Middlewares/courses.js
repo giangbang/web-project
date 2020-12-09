@@ -37,6 +37,31 @@ module.exports.create = async function(req, res, next) {
 	}
 };
 
+module.exports.getPointByUser = async function(req, res, next) {
+	try {
+		let courseId = req.query.id;
+    let userId = req.user.data.id;
+		let q = await controller.courses.getPointByUser(userId, courseId);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send((""+e));
+	}
+};
+
+module.exports.update = async function(req, res, next) {
+	try {
+		let content = req.body;
+    let id = content.id;
+		let q = await controller.courses.update(id, content);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send((""+e));
+	}
+};
+
+
 module.exports.del = async function(req, res, next) {
 	try {
 		let id = req.query.id;

@@ -36,6 +36,18 @@ module.exports.getAll = async function(req, res, next) {
 	}
 };
 
+module.exports.update = async function(req, res, next) {
+	try {
+		let content = req.body;
+    let id = content.id;
+		let q = await controller.tags.update(id, content);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send((e));
+	}
+};
+
 module.exports.create = async function(req, res, next) {
 	try {
 		let content = req.body;

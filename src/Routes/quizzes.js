@@ -34,5 +34,10 @@ router.post(path + '/new',
 		handler.auths.authenticated, 
 		handler.auths.administrator, 
 		handler.quizzes.create);
+    
+router.post(path + '/update', 
+		handler.auths.authenticated, 
+		handler.auths.administrator, 
+		handler.quizzes.update);
 
 module.exports = router;

@@ -20,6 +20,22 @@ async function getByCourse(id) {
 	}
 }
 
+async function update(id, newTag) {
+	try {
+		let tag = await tags.findByPk(id);
+		if (tag == null) return error("Tag not found");
+    
+    for (let [key, value] of Object.entries(newTag)) {
+      if (key == 'id') continue;
+      tag[key] = value;
+    }
+    tag = await tag.save();
+		return success(tag);
+	} catch (e) {
+		return error(e);
+	}
+}
+
 async function create(tag) {
 	let row = tags.build(tag);
 	try {
@@ -69,5 +85,6 @@ module.exports = {
 	create: create,
 	del: del,
   getAll: getAll,
+  update: update,
   getByCourse: getByCourse
 } 

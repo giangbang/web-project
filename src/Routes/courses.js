@@ -14,6 +14,10 @@ router.get(path + '/id',
     
 router.get(path + '/all', 
 		handler.courses.getAll);
+    
+router.get(path + '/points/id', 
+    handler.auths.authenticated,
+		handler.courses.getPointByUser);
 	
 router.delete(path + '/delete/id/', 
 		handler.auths.authenticated,
@@ -25,5 +29,10 @@ router.post(path + '/new',
 		handler.auths.authenticated, 
     handler.auths.administrator,
 		handler.courses.create);
+    
+router.post(path + '/update', 
+		handler.auths.authenticated, 
+    handler.auths.administrator,
+		handler.courses.update);
 
 module.exports = router;

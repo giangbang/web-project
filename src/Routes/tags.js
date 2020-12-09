@@ -21,6 +21,11 @@ router.post(path + '/new',
 		handler.auths.administrator, 
 		handler.tags.create);
 
+router.post(path + '/update', 
+		handler.auths.authenticated, 
+		handler.auths.administrator, 
+		handler.tags.update);
+
 router.get(path + '/all', 
 		handler.auths.authenticated, 
 		handler.tags.getAll);

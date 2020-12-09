@@ -130,11 +130,27 @@ async function del(id)  {
 	}
 }
 
+async function getByUser(id) {
+  try {
+		let submission = await users.findOne({
+			where: {id: id},
+      attributes: ['id'],
+      include: [submissions]
+		});
+    submission = submission.submissions;
+		if (submission != null) return success(submission);
+		return error("Submission not found");
+	} catch (e) {
+		return error(e);
+	}
+}
+
 module.exports = {
 	create: create,
 	del: del,
   getById: getById,
   getByUserAndQuiz: getByUserAndQuiz,
   getAllByQuiz: getAllByQuiz,
-  getByCourse: getByCourse
+  getByCourse: getByCourse,
+  getByUser: getByUser
 }
