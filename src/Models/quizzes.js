@@ -12,7 +12,7 @@ module.exports = {
 			allowNull: false,
 		},
 		content: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT,
 			allowNull: false
 		},
 		deadline: {

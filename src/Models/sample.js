@@ -38,6 +38,40 @@ let submission3 = {
   userId : 2
 }
 
+let submission4 = {
+  sourceCode: "print(hello worlddw)2",
+  point: 5,
+  quizId : 2,
+  userId : 3
+}
+
+let submission5 = {
+  sourceCode: "pq23rint(hello world)2",
+  point: 7,
+  quizId : 2,
+  userId : 2
+}
+
+let submission6 = {
+  sourceCode: "ewdprint(hello world)2",
+  point: 9,
+  quizId : 1,
+  userId : 2
+}
+
+let submission7 = {
+  sourceCode: "2e2print(hello world)2",
+  point: 8,
+  quizId : 1,
+  userId : 1
+}
+
+let submission8 = {
+  sourceCode: "dwprint(hello world)2",
+  point: 7,
+  quizId : 2,
+  userId : 1
+}
 
 let course2 = {
   name: "tin hoc co so 2",
@@ -50,15 +84,27 @@ let course1 = {
 }
 
 let quiz1 = {
-  title: "bai 1 khoa 1",
-  content: "hello",
-  tagId: 1
+  quiz: {
+    title: "bai 1 khoa 1",
+    content: "hello",
+    tagId: 1
+  }
 }
 
 let quiz2 = {
-  title: "bai 2 khoa 1",
-  content: "hello world",
-  tagId: 1
+  quiz: {
+    title: "bai 2 khoa 1",
+    content: "hello world",
+    tagId: 1
+  }
+}
+
+let quiz3 = {
+  quiz: {
+    title: "bai 2 khoa 1",
+    content: "hellofe world",
+    tagId: 2
+  }
 }
 
 let comment2 = {
@@ -97,9 +143,15 @@ module.exports = async () => {
     await controller.tags.create(tag2);
     await controller.quizzes.create(quiz2);
     await controller.quizzes.create(quiz1);
+    await controller.quizzes.create(quiz3);
     await controller.submissions.create(submission1);
     await controller.submissions.create(submission2);
     await controller.submissions.create(submission3);
+    await controller.submissions.create(submission4);
+    await controller.submissions.create(submission5);
+    await controller.submissions.create(submission6);
+    await controller.submissions.create(submission7);
+    await controller.submissions.create(submission8);
     await controller.comments.create(comment2);
     await controller.comments.create(comment1);
   } catch(e) {

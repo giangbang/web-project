@@ -8,6 +8,9 @@ const router            = express.Router();
 
 router.get(path + '/code', 
 		handler.courses.getByCode);
+    
+router.get(path + '/points/all', 
+		handler.courses.getPoints);
 
 router.get(path + '/id', 
 		handler.courses.getById);

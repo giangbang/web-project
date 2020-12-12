@@ -129,5 +129,6 @@ async function init(force =  false) {
 
 module.exports = {
 	models: database.models,
-	init: init
+	init: init,
+  sequelize: database
 }

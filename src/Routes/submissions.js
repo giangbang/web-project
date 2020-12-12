@@ -32,8 +32,7 @@ router.get(path+'/courses/id',
 		handler.auths.authenticated, 
 		handler.submissions.getByCourse);
     
-router.get(path+'/users/', 
-		handler.auths.authenticated, 
+router.get(path+'/users/id', 
 		handler.submissions.getByUser);
 	
 

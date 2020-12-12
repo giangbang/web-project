@@ -8,6 +8,10 @@ const router            = express.Router();
 
 router.get(path + '/id', 
 		handler.quizzes.getById);
+    
+router.get(path + '/currentUser/points/all', 
+    handler.auths.authenticated,
+		handler.quizzes.getAllquizzesWithPointOfUser);
 	
 router.delete(path + '/delete/id',
     handler.auths.authenticated, 

@@ -25,6 +25,17 @@ module.exports.getHighestPoint = async function(req, res, next) {
 	}
 };
 
+module.exports.getAllquizzesWithPointOfUser = async function(req, res, next) {
+	try {
+    let userid = req.user.data.id;
+		let q = await controller.quizzes.getAllquizzesWithPointOfUser(userid);
+		res.status(q.status).send(q.data);
+		next();
+	} catch (e) {
+		res.status(500).send(e+'');
+	}
+};
+
 module.exports.getUsersPoint = async function(req, res, next) {
 	try {
 		let quizid = req.query.id;

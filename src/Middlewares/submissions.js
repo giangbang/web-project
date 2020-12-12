@@ -41,7 +41,7 @@ module.exports.getByCourse = async function(req, res, next) {
 
 module.exports.getByUser = async function(req, res, next) {
 	try {
-		let id = req.user.data.id;
+		let id = req.query.id;
 		let q = await controller.submissions.getByUser(id);
 		res.status(q.status).send(q.data);
 		next();
