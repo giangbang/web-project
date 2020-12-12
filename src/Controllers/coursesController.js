@@ -101,8 +101,9 @@ async function getPoints(id) {
       WHERE courses.id = ${id}
       GROUP BY courses.id, course_table.userID
     )`, { type: Sequelize.QueryTypes.SELECT });
+    
     if (q == null) return error("Course not found");
-    q = q[0]
+   
     return success(q);
   } catch (e) {
     console.trace();
