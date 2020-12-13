@@ -8,7 +8,7 @@ module.exports = {
 			autoIncrement: true,
 		},
 		sourceCode: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT,
 			allowNull: false,
 		},
     point: {

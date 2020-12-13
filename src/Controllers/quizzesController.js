@@ -62,9 +62,9 @@ async function getUsersPoint(userid, quizid) {
       return error("Quiz id not found");
       
     let result = { point: undefined }
-      if (point.submissions.length >= 1) {
-        result = { point: (point.submissions)[0].point };
-      }
+    if (point.submissions.length >= 1) {
+      result = { point: (point.submissions)[0].point };
+    }
     return success(result);
     
   } catch (e) {
@@ -83,7 +83,6 @@ async function getHighestPoint(quizid, top = 10) {
           order: [
             ['point', 'DESC']
           ],
-          limit: Math.min(maxNumQuery, top),
           attributes: ['point', 'id']
         }
       ],
@@ -194,7 +193,7 @@ async function getAllquizzesWithPointOfUser(id) {
       SELECT quizId, MAX(point) AS point FROM quizzes
       INNER JOIN (SELECT users.id, submissions.point, quizId FROM users
         INNER JOIN submissions ON submissions.userId = users.id
-        WHERE users.id = 1
+        WHERE users.id = ${id}
       ) AS submission_table ON submission_table.quizId = quizzes.id
       GROUP BY quizId
     `, { type: Sequelize.QueryTypes.SELECT });

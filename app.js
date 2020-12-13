@@ -33,6 +33,7 @@ app.use(routes.commentRouter);
 app.use(routes.submissionRouter);
 app.use(routes.testCaseRouter);
 app.use(routes.tagRouter);
+app.use(routes.hackerEarth);
 
 init().then(function() {
 	app.listen(process.env.PORT, function() {

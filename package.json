@@ -2,7 +2,7 @@
   "name": "codehub",
   "version": "1.0.0",
   "description": "database for codehub",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js"
@@ -10,11 +10,13 @@
   "author": "giangbang",
   "license": "ISC",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
+    "hackerearth-node": "^2.3.9",
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",

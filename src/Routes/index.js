@@ -7,3 +7,4 @@ module.exports.commentRouter 	  = require('./comments');
 module.exports.submissionRouter = require('./submissions');
 module.exports.testCaseRouter   = require('./testCases');
 module.exports.tagRouter        = require('./tags');
+module.exports.hackerEarth      = require('./hackerearth');
